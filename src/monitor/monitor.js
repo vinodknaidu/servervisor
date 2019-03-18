@@ -1,10 +1,10 @@
 const poller = require('./poller.js')
-const urlManager = require('../urlManager.js')
+const urlController = require('../controllers/urlController.js/index.js')
 
  
 async function startHealthCheck() {
   try {
-    let urlsObj = await urlManager.getUrls()
+    let urlsObj = await urlController.getUrls()
 
     urlsObj.forEach(urlObj => {
       setInterval(() => {
@@ -20,7 +20,7 @@ async function startHealthCheck() {
 async function checkAndSaveHealth(url) {
   try {
     let pollResult = await poller.poll(url)
-    return urlManager.savePollResult(pollResult)
+    return urlController.savePollResult(pollResult)
   }
   catch (err) {
     console.log(err)

@@ -1,4 +1,4 @@
-const database = require('./database.js')
+const database = require('../database.js')
 
 
 async function storeUrl(urlObj) {
@@ -46,7 +46,11 @@ async function getUrls(userId) {
     }
   }
 
-  let cursor = await dbConn.collection('urls').find(query)
+  let cursor = await dbConn.collection('urls').find(query, {
+    projection: {
+      _id: 0
+    }
+  })
 
   return cursor.toArray()
     .catch(err => {

@@ -1,6 +1,6 @@
 const express = require('express')
 
-const urlManagerRouter = require('./routes/urlManager.js')
+const urlRoutes = require('./routes/urlRoutes.js')
 
 const app = express()
 
@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.use('/urls', urlManagerRouter)
+app.use('/urls', urlRoutes)
 
 
 module.exports = app
