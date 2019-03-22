@@ -1,5 +1,6 @@
 const poller = require('./poller.js')
-const urlController = require('../controllers/urlController.js/index.js')
+const urlController = require('../controllers/urlController.js')
+const pollResultsController = require('../controllers/pollResultsController.js')
 
  
 async function startHealthCheck() {
@@ -20,7 +21,7 @@ async function startHealthCheck() {
 async function checkAndSaveHealth(url) {
   try {
     let pollResult = await poller.poll(url)
-    return urlController.savePollResult(pollResult)
+    return pollResultsController.savePollResult(pollResult)
   }
   catch (err) {
     console.log(err)
@@ -28,6 +29,7 @@ async function checkAndSaveHealth(url) {
 }
 
 startHealthCheck()
+
 module.exports = {
   startHealthCheck: startHealthCheck
 }
