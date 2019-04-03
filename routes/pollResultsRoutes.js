@@ -9,7 +9,8 @@ router.get('/', async function(req, res) {
 })
 
 router.get('/:url', async function(req, res) {
-  let pollResults = await pollResultsController.getPollResults(req.params.url)
+  let url = decodeURIComponent(req.params.url)
+  let pollResults = await pollResultsController.getPollResults(url)
 
   res.send(pollResults)
 })
