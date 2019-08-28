@@ -33,7 +33,7 @@ class Auth {
     }
   }
 
-  public authorize = async (req: Request, res: Response, next: NextFunction) => {
+  public async authorize(req: Request, res: Response, next: NextFunction) {
     try {
       if (req.session!.userDetails) {
         next();

@@ -1,5 +1,5 @@
 import { Db, MongoClient } from "mongodb";
-const { DB_URI } = require("../appconfig.json");
+import { DB_URI } from "../appconfig.json";
 
 class DB {
   private static db: Db;
@@ -15,7 +15,7 @@ class DB {
 
     try {
       await client.connect();
-      console.log("Connected to MongoDB.")
+      console.log("Connected to MongoDB.");
       DB.db = client.db();
       return DB.db;
     }

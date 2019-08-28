@@ -1,7 +1,8 @@
 import cookieSession from "cookie-session";
 import express from "express";
 
-const { PORT } = require("./appConfig.json")
+import { PORT } from "./appConfig.json";
+import url from "./routes/url";
 import Auth from "./src/Auth";
 import DB from "./src/DB";
 
@@ -20,6 +21,8 @@ app.use(cookieSession({
 const auth: Auth = new Auth();
 app.post("/login", auth.login);
 app.use(auth.authorize);
+
+app.use("/urls", url);
 
 app.listen(PORT || 4000, () => {
   console.log(`Server runnong on port ${PORT || 4000}`);
