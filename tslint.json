@@ -7,7 +7,8 @@
   "rules": {
     "one-line": false,
     "member-ordering": false,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }
