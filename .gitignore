@@ -2,3 +2,4 @@ node_modules
 .sonarlint
 logs
 .vscode
+client/node_modules
