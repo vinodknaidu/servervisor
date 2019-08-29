@@ -1,9 +1,9 @@
-import { Db, UpdateWriteOpResult } from "mongodb";
+import { Cursor, Db, UpdateWriteOpResult } from "mongodb";
 
 import DB from "./DB";
 
 class Url {
-  public async getUrls(email: string): Promise<IUrls[]> {
+  public async getUrls(email: string): Promise<IUrl[]> {
     try {
       const db: Db = await DB.getConnection();
       const urls = await db.collection("users")
@@ -25,6 +25,32 @@ class Url {
     }
     catch (error) {
       throw new Error(`getUrls() :: ${error}`);
+    }
+  }
+
+  public async getAllUrls(): Promise<string[]> {
+    try {
+      const db: Db = await DB.getConnection();
+      const cursor: Cursor = await db.collection("users").find(
+        {},
+        {
+          projection: {
+            _id: 0,
+            urls: 1
+          }
+        }
+      );
+      const urlSet: Set<string> = new Set();
+      await cursor.forEach(({ urls }) => {
+        urls.forEach((url: IUrl) => {
+          urlSet.add(url.url);
+        });
+      });
+
+      return Array.from(urlSet);
+    }
+    catch (error) {
+      throw new Error(`getAllUrls() :: ${error}`);
     }
   }
 
@@ -76,7 +102,7 @@ export interface IUrlStatus {
   status: string;
 }
 
-export interface IUrls {
+export interface IUrl {
   url: string;
   createdOn: Date;
   status: string;

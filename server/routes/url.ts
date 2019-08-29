@@ -22,7 +22,7 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.post(
+router.put(
   ["/activate", "/deactivate", "/delete"],
   async (req: Request, res: Response) => {
     const urlStatus: IUrlStatus = {
