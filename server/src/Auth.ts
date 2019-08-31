@@ -1,19 +1,21 @@
 import { NextFunction, Request, Response } from "express";
+import { Db } from "mongodb";
 
+import { collections } from "../constants";
 import DB from "./DB";
 
 class Auth {
   private async authenticate(email: string, password: string): Promise<object> {
     try {
-      const conn = await DB.getConnection();
-      const user: object = conn.collection("users").findOne({
+      const db: Db = await DB.getConnection();
+      const user: object = db.collection(collections.USERS).findOne({
         email,
         password
       });
       return user;
     }
-    catch (err) {
-      throw new Error("authenticate() :: " + err);
+    catch (error) {
+      throw error;
     }
   }
 
@@ -28,8 +30,8 @@ class Auth {
         res.status(404).json({ message: "Wrong credentials" });
       }
     }
-    catch (err) {
-      throw new Error("login() :: " + err);
+    catch (error) {
+      throw error;
     }
   }
 
@@ -42,8 +44,8 @@ class Auth {
         res.status(401).send();
       }
     }
-    catch (err) {
-      throw new Error("authorize() :: " + err);
+    catch (error) {
+      throw error;
     }
   }
 }

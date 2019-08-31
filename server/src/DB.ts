@@ -20,7 +20,7 @@ class DB {
       return DB.db;
     }
     catch (error) {
-      throw new Error("Failed to connect to mongoDB");
+      throw error;
     }
   }
 }
