@@ -14,8 +14,8 @@ class Auth {
       });
       return user;
     }
-    catch (err) {
-      throw new Error("authenticate() :: " + err);
+    catch (error) {
+      throw error;
     }
   }
 
@@ -31,7 +31,7 @@ class Auth {
       }
     }
     catch (err) {
-      throw new Error("login() :: " + err);
+      throw error;
     }
   }
 
@@ -45,7 +45,7 @@ class Auth {
       }
     }
     catch (err) {
-      throw new Error("authorize() :: " + err);
+      throw error;
     }
   }
 }

@@ -11,7 +11,7 @@ class PollResult {
       return writeResult;
     }
     catch (error) {
-      throw new Error(`saveResults() :: ${error}`);
+      throw error;
     }
   }
 }

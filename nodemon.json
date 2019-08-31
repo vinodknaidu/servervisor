@@ -3,5 +3,5 @@
     "server"
   ],
   "ext": "ts",
-  "exec": "node -r ts-node/register --inspect server/index.ts",
+  "exec": "node -r ts-node/register --inspect server/index.ts"
 }

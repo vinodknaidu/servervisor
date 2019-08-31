@@ -25,7 +25,7 @@ class Url {
       }
     }
     catch (error) {
-      throw new Error(`getUrls() :: ${error}`);
+      throw error;
     }
   }
 
@@ -56,7 +56,7 @@ class Url {
       return Array.from(urlSet);
     }
     catch (error) {
-      throw new Error(`getAllUrls() :: ${error}`);
+      throw error;
     }
   }
 
@@ -79,7 +79,7 @@ class Url {
       return result;
     }
     catch (error) {
-      throw new Error(`addUrl() :: ${error}`);
+      throw error;
     }
   }
 
@@ -98,7 +98,7 @@ class Url {
       return result;
     }
     catch (error) {
-      throw new Error(`changeUrlStatus() :: ${error}`);
+      throw error;
     }
   }
 }
