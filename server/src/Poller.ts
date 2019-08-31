@@ -31,8 +31,11 @@ class Poller {
     }
   }
 
-  private async poll(urls: string[]) {
+  private async poll(urls: string | string[]): Promise<IPollResult | IPollResult[]> {
     try {
+      if (!Array.isArray(urls)) {
+        urls = [urls];
+      }
       const polls: any[] = [];
       const pollResults: IPollResult[] = [];
 
@@ -55,21 +58,27 @@ class Poller {
       });
 
       await Promise.all(polls);
-      new PollResult().saveResults(pollResults);
+      if (Array.isArray(urls)) {
+        return pollResults;
+      }
+      else {
+        return pollResults[0];
+      }
     }
     catch (error) {
-      throw new Error(`poll() :: ${error}`);
+      throw error;
     }
   }
 
-  public async startPolling() {
+  public pollAndSaveResults = async () => {
     try {
       const url = new Url();
       const urls: string[] = await url.getAllUrls();
-      await this.poll(urls);
+      const pollResults: IPollResult[] | IPollResult = await this.poll(urls);
+      await new PollResult().saveResults(pollResults);
     }
     catch (error) {
-      throw new Error(`startPolling() :: ${error}`);
+      throw error;
     }
   }
 }

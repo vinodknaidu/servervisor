@@ -1,12 +1,13 @@
 import { AggregationCursor, Db, UpdateWriteOpResult } from "mongodb";
 
+import { collections } from "../constants";
 import DB from "./DB";
 
 class Url {
   public async getUrls(email: string): Promise<IUrl[]> {
     try {
       const db: Db = await DB.getConnection();
-      const urls = await db.collection("users")
+      const urls = await db.collection(collections.USERS)
         .findOne(
           {
             email,
@@ -31,14 +32,13 @@ class Url {
   public async getAllUrls(): Promise<string[]> {
     try {
       const db: Db = await DB.getConnection();
-      const cursor: AggregationCursor = await db.collection("users").aggregate([
+      const cursor: AggregationCursor = await db.collection(collections.USERS).aggregate([
         {
           $project: {
             urls: {
               $filter: {
                 input: "$urls",
-                as: "url",
-                cond: { $eq: ["$$url.status", "active"] }
+                cond: { $eq: ["$$this.status", "active"] }
               }
             }
           }
@@ -69,7 +69,7 @@ class Url {
       };
 
       const db: Db = await DB.getConnection();
-      const result: UpdateWriteOpResult = await db.collection("users")
+      const result: UpdateWriteOpResult = await db.collection(collections.USERS)
         .updateOne({ email }, {
           $push: {
             urls: urlObj
@@ -86,7 +86,7 @@ class Url {
   public async changeUrlStatus(email: string, url: IUrlStatus): Promise<UpdateWriteOpResult> {
     try {
       const db: Db = await DB.getConnection();
-      const result: UpdateWriteOpResult = await db.collection("users")
+      const result: UpdateWriteOpResult = await db.collection(collections.USERS)
         .updateOne(
           {
             email,

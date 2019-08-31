@@ -1,15 +1,18 @@
 import cookieSession from "cookie-session";
 import express from "express";
 
-import { PORT } from "./appConfig.json";
+import { INTERVAL_IN_MIN, PORT } from "./appConfig.json";
 import url from "./routes/url";
 import Auth from "./src/Auth";
 import DB from "./src/DB";
+import Poller from "./src/Poller";
 
 const app = express();
 
 // Establish mongodb connection.
 DB.getConnection();
+// Start polling.
+setInterval(new Poller().pollAndSaveResults, INTERVAL_IN_MIN * 1000);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

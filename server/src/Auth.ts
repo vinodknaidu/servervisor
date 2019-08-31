@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response } from "express";
+import { Db } from "mongodb";
 
+import { collections } from "../constants";
 import DB from "./DB";
 
 class Auth {
   private async authenticate(email: string, password: string): Promise<object> {
     try {
-      const conn = await DB.getConnection();
-      const user: object = conn.collection("users").findOne({
+      const db: Db = await DB.getConnection();
+      const user: object = db.collection(collections.USERS).findOne({
         email,
         password
       });

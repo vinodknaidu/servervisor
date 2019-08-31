@@ -12,6 +12,11 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.post("/", async (req: Request, res: Response) => {
+  const url = req.body.url.match(/^http.+\.{1}[a-zA-Z]+$/);
+  if (!url) {
+    return res.status(400).send({ message: "Invalid url" });
+  }
+
   const result: UpdateWriteOpResult = await url.addUrl(req.session!.userDetails.email, req.body.url);
   if (result.matchedCount) {
     res.send({ message: "Updated successfully" });
