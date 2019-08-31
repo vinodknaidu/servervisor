@@ -1,4 +1,4 @@
-import { Cursor, Db, UpdateWriteOpResult } from "mongodb";
+import { AggregationCursor, Db, UpdateWriteOpResult } from "mongodb";
 
 import DB from "./DB";
 
@@ -31,18 +31,24 @@ class Url {
   public async getAllUrls(): Promise<string[]> {
     try {
       const db: Db = await DB.getConnection();
-      const cursor: Cursor = await db.collection("users").find(
-        {},
+      const cursor: AggregationCursor = await db.collection("users").aggregate([
         {
-          projection: {
-            _id: 0,
-            urls: 1
+          $project: {
+            urls: {
+              $filter: {
+                input: "$urls",
+                as: "url",
+                cond: { $eq: ["$$url.status", "active"] }
+              }
+            }
           }
         }
-      );
+      ]);
+
+      const users = await cursor.toArray();
       const urlSet: Set<string> = new Set();
-      await cursor.forEach(({ urls }) => {
-        urls.forEach((url: IUrl) => {
+      users.forEach((user) => {
+        user.urls.forEach((url: IUrl) => {
           urlSet.add(url.url);
         });
       });

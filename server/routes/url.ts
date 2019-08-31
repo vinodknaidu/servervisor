@@ -27,13 +27,10 @@ router.put(
   async (req: Request, res: Response) => {
     const urlStatus: IUrlStatus = {
       url: req.body.url,
-      status: ""
+      status: "active"
     };
 
-    if (req.path.match("/activate")) {
-      urlStatus.status = "active";
-    }
-    else if (req.path.match("/deactivate")) {
+    if (req.path.match("/deactivate")) {
       urlStatus.status = "inactive";
     }
     else if (req.path.match("/delete")) {
