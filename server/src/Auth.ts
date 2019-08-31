@@ -30,7 +30,7 @@ class Auth {
         res.status(404).json({ message: "Wrong credentials" });
       }
     }
-    catch (err) {
+    catch (error) {
       throw error;
     }
   }
@@ -44,7 +44,7 @@ class Auth {
         res.status(401).send();
       }
     }
-    catch (err) {
+    catch (error) {
       throw error;
     }
   }
