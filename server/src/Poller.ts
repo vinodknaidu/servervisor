@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 
 import pollResult, { IPollResult } from './PollResult';
-import Url from "./Url";
 import PollResult from "./PollResult";
+import Url from "./Url";
 
 class Poller {
   private async checkStatus(url: string): Promise<ICheckStatusResult> {
@@ -75,7 +75,7 @@ class Poller {
       const url = new Url();
       const urls: string[] = await url.getAllUrls();
       const pollResults: IPollResult[] | IPollResult = await this.poll(urls);
-      await new PollResult().saveResults(pollResults);
+      await new PollResult().savePollResults(pollResults);
     }
     catch (error) {
       throw error;
