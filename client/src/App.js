@@ -1,11 +1,15 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import {
-  Grid,
-  AppBar
+  Grid
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import './App.css'
+
+import AppHeader from 'components/AppHeader'
+import Login from 'components/Login'
+import Footer from 'components/Footer'
+import Dashboard from './components/Dashboard'
 
 const useStyles = makeStyles({
   container: {
@@ -15,18 +19,36 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles()
+  const x = () => {
+    return <h1>asdffdas</h1>
+  }
+  return <Router>
+    <Grid className={classes.container} container direction="column">
 
-  return <Grid className={classes.container} container direction="column">
-    <Grid item>
-      {/* <AppBar /> */}header
+      <Grid item>
+        <AppHeader />
+      </Grid>
+
+      <Grid item xs>
+        <Grid
+          className={classes.container}
+          container
+          justify="center"
+          alignContent="center"
+        >
+          <Grid item>
+            <Route exact path="/" component={Login} />
+            <Route path="/home" component={Dashboard} />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item>
+        <Footer />
+      </Grid>
+
     </Grid>
-    <Grid item xs>
-      content
-    </Grid>
-    <Grid item>
-      footer
-    </Grid>
-  </Grid>
+  </Router>
 }
 
 export default App;
