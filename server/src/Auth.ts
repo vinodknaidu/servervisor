@@ -8,10 +8,21 @@ class Auth {
   private async authenticate(email: string, password: string): Promise<object> {
     try {
       const db: Db = await DB.getConnection();
-      const user: object = db.collection(collections.USERS).findOne({
-        email,
-        password
-      });
+      const user: object = db.collection(collections.USERS)
+        .findOne(
+          {
+            email,
+            password
+          },
+          {
+            projection: {
+              firstName: 1,
+              lastName: 1,
+              email: 1,
+              _id: 0
+            }
+          }
+        );
       return user;
     }
     catch (error) {
@@ -27,7 +38,7 @@ class Auth {
         res.send(user);
       }
       else {
-        res.status(404).json({ message: "Wrong credentials" });
+        res.status(400).json({ message: "Wrong credentials" });
       }
     }
     catch (error) {

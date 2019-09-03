@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-function Login() {
+function Login(props) {
   const classes = useStyles()
 
   const [values, setValues] = useState({
@@ -31,42 +31,55 @@ function Login() {
     password: ''
   })
 
-  const handleOnChange = name => event => {
-    setValues({ ...values, [name]: event.target.value })
+  const handleOnChange = event => {
+    setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  return <Grid className={classes.container} container>
-    <Grid className={classes.itemBottomMargin} item xs={12}>
-      <TextField
-        fullWidth
-        name="email"
-        label="email"
-        variant="outlined"
-        type="email"
-        onChange={handleOnChange('name')}
-        value={values.name}
-      />
-    </Grid>
-    <Grid className={classes.itemBottomMargin} item xs={12}>
-      <TextField
-        fullWidth
-        name="password"
-        label="password"
-        variant="outlined"
-        type="password"
-        onChange={handleOnChange('password')}
-        value={values.password}
-      />
-    </Grid>
-    <Grid className={classes.loginButtonContainer} item xs={12}>
-      <Button
-        color="secondary"
-        variant="contained"
-      >
-        Login
+  const login = event => {
+    event.preventDefault()
+    props.login(values.email, values.password)
+  }
+
+  return <form onSubmit={login}>
+    <Grid className={classes.container} container>
+      <Grid className={classes.itemBottomMargin} item xs={12}>
+        <TextField
+          autoComplete="off"
+          fullWidth
+          name="email"
+          label="email"
+          variant="outlined"
+          type="email"
+          onChange={handleOnChange}
+          value={values.name}
+          required
+        />
+      </Grid>
+      <Grid className={classes.itemBottomMargin} item xs={12}>
+        <TextField
+          fullWidth
+          autoComplete="off"
+          name="password"
+          label="password"
+          variant="outlined"
+          type="password"
+          onChange={handleOnChange}
+          value={values.password}
+          required
+        />
+      </Grid>
+      <Grid className={classes.loginButtonContainer} item xs={12}>
+        <Button
+          color="secondary"
+          variant="contained"
+          // onClick={login}
+          type="submit"
+        >
+          Login
       </Button>
+      </Grid>
     </Grid>
-  </Grid>
+  </form>
 }
 
 export default Login

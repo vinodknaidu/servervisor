@@ -6,10 +6,11 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import './App.css'
 
+import ProtectedRoute from 'containers/ProtectedRoute'
 import AppHeader from 'components/AppHeader'
-import Login from 'components/Login'
+import Login from 'containers/Login'
 import Footer from 'components/Footer'
-import Dashboard from './components/Dashboard'
+import Dashboard from 'components/Dashboard'
 
 const useStyles = makeStyles({
   container: {
@@ -19,9 +20,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles()
-  const x = () => {
-    return <h1>asdffdas</h1>
-  }
+
   return <Router>
     <Grid className={classes.container} container direction="column">
 
@@ -38,7 +37,7 @@ function App() {
         >
           <Grid item>
             <Route exact path="/" component={Login} />
-            <Route path="/home" component={Dashboard} />
+            <ProtectedRoute path="/dashboard" component={Dashboard} />
           </Grid>
         </Grid>
       </Grid>
