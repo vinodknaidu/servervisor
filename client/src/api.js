@@ -12,3 +12,33 @@ export async function login(email, password) {
     console.error(error)
   }
 }
+
+export async function getUrls() {
+  try {
+    const res = await axios.get(URLS.GET_ADD_URLS)
+    return res.data
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getPollResults(url) {
+  try {
+    const res = await axios.get(`${URLS.GET_POLL_RESULTS}?url=${url}`)
+    return res.data
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+export async function addUrl(url) {
+  try {
+    const res = await axios.post(URLS.GET_ADD_URL, { url })
+    return res.data
+  }
+  catch (error) {
+    console.error(error)
+  }
+}

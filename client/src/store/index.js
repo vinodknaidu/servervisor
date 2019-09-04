@@ -2,10 +2,12 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 import { loggedInUser } from './userStore'
+import { selectedUrl } from './urlStore'
 import rootSaga from 'sagas'
 
 const rootReducer = combineReducers({
-  loggedInUser
+  loggedInUser,
+  selectedUrl
 })
 
 const sagaMiddleware = createSagaMiddleware()

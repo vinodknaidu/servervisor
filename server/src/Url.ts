@@ -60,9 +60,9 @@ class Url {
     }
   }
 
-  public async addUrl(email: string, url: string): Promise<UpdateWriteOpResult> {
+  public async addUrl(email: string, url: string): Promise<IUrl> {
     try {
-      const urlObj = {
+      const urlObj: IUrl = {
         url,
         addedOn: new Date(),
         status: "active"
@@ -76,7 +76,7 @@ class Url {
           }
         });
 
-      return result;
+      return urlObj;
     }
     catch (error) {
       throw error;
@@ -110,7 +110,7 @@ export interface IUrlStatus {
 
 export interface IUrl {
   url: string;
-  createdOn: Date;
+  addedOn: Date;
   status: string;
 }
 

@@ -15,6 +15,10 @@ import Dashboard from 'components/Dashboard'
 const useStyles = makeStyles({
   container: {
     height: '100%'
+  },
+  content: {
+    overflow: 'auto',
+    display: 'flex'
   }
 })
 
@@ -28,14 +32,14 @@ function App() {
         <AppHeader />
       </Grid>
 
-      <Grid item xs>
+      <Grid className={classes.content} item xs>
         <Grid
           className={classes.container}
           container
           justify="center"
           alignContent="center"
         >
-          <Grid item>
+          <Grid item style={{height: '100%'}}>
             <Route exact path="/" component={Login} />
             <ProtectedRoute path="/dashboard" component={Dashboard} />
           </Grid>
