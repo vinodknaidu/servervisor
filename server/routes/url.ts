@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { UpdateWriteOpResult } from "mongodb";
 
-import Url, { IUrlStatus } from "../src/Url";
+import Url, { IUrl, IUrlStatus } from "../src/Url";
 
 const router: Router = Router();
 const url: Url = new Url();
@@ -12,18 +12,17 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.post("/", async (req: Request, res: Response) => {
-  const url = req.body.url.match(/^http.+\.{1}[a-zA-Z]+$/);
-  if (!url) {
+  const urlToAdd = req.body.url.match(/^http.+\.{1}[a-zA-Z]+$/);
+  if (!urlToAdd) {
     return res.status(400).send({ message: "Invalid url" });
   }
 
-  const result: UpdateWriteOpResult = await url.addUrl(req.session!.userDetails.email, req.body.url);
-  if (result.matchedCount) {
-    res.send({ message: "Updated successfully" });
+  const result: IUrl = await url.addUrl(req.session!.userDetails.email, req.body.url);
+  if (result) {
+    res.send(result);
   }
   else {
-    res.status(404)
-      .send({ message: `${req.params.email} does not exist` });
+    res.status(404).send({ message: "Failed to add url" });
   }
 });
 

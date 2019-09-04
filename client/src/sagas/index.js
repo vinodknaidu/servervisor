@@ -1,7 +1,10 @@
-import { all, takeLatest } from 'redux-saga'
+import { all, takeLatest } from 'redux-saga/effects'
+
+import { LOGIN } from 'store/userStore'
+import { login } from 'sagas/userSaga'
 
 export default function* () {
   yield all([
-    takeLatest()
+    takeLatest(LOGIN, login)
   ])
 }

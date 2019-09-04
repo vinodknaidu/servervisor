@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { blue, green, grey } from '@material-ui/core/colors'
 
 import store from 'store'
-import App from './App';
+import App from 'containers/App';
 
 const theme = createMuiTheme({
   palette: {
